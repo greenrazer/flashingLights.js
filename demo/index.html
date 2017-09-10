@@ -1,18 +1,58 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>flashingLights.js Demo</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="../src/flashingLights.js"></script>
-	</head>
-	<body>
-		<div id="element"></div>
-		<script>
-			$( function() {
-				$( "#element" ).lightUp( {
-					type: "slot"
-				} );
-			} );
-		</script>
-	</body>
+  <head>
+    <title>flashingLights.js Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../src/flashingLights.js"></script>
+  </head>
+  <body>
+    <div class="slots">
+      <div>
+        One
+      </div>
+      <div>
+        Two
+      </div>
+      <div>
+        Three
+      </div>
+    </div>
+    <div class="slots">
+      <div>
+        One
+      </div>
+      <div>
+        Two
+      </div>
+      <div>
+        Three
+      </div>
+    </div>
+    <div class="slots">
+      <div>
+        One
+      </div>
+      <div>
+        Two
+      </div>
+      <div>
+        Three
+      </div>
+    </div>
+    <div id="slot1">
+      <div>
+        One
+      </div>
+      <div>
+        Two
+      </div>
+      <div>
+        Three
+      </div>
+    </div>
+    <script>
+        var slots = $( ".slots" ).lightUp();
+        var slot = $( "#slot1" ).lightUp();
+    </script>
+  </body>
 </html>

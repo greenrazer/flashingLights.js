@@ -16,10 +16,13 @@
   var slot1 = $("#element").lightUp({type:'slot'});
   // for many
   var slots = $(".elements").lightUp({type:'slot'});
-  // spins to the zero position, returns the input parameter
-  slot1.spin(0);
+  // spins to the zero position, returns the input parameter, runs the callback when finished spinning
+  slot1.spin({
+    to: 0,
+    done: function(){alert("done");}
+  });
   // e.g. returns 0
-  //spins all slots to a random position, returns an array of random numbers between zero and the size of the slot
+  //spins all slots to a random position, returns an array of random numbers between zero and the size of the slot since
   slots.spin();
   // e.g. returns [3, 4, 2, ..., 3, 1]
   ```

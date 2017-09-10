@@ -60,7 +60,7 @@
         var totalDist = me.children().children(":first-of-type").height() * (tiles + pos);
         me.children().animate({
           'margin-top': "-" + totalDist + "px",
-        }, 5000, function() {
+        }, 500, 'linear', function() {
           returnTo(me, pos);
           depopulateSlot(me);
           callback();

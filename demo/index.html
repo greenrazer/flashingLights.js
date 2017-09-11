@@ -49,12 +49,42 @@
       <div>
         Three
       </div>
+      <div>
+        Four
+      </div>
+      <div>
+        Five
+      </div>
+      <div>
+        Six
+      </div>
+      <div>
+        Seven
+      </div>
+      <div>
+        Eight
+      </div>
+      <div>
+        Nine
+      </div>
     </div>
     <button onclick="console.log(slot.spin());">click</button>
     <button onclick="console.log(slots.spin());">click</button>
+    <style type="text/css">
+      .slots {
+        display: inline-block;
+        height: 500px;
+        width: 30%;
+      }
+
+      #slot1 {
+        display: inline-block;
+        height: 500px;
+      }
+    </style>
     <script>
         var slots = $( ".slots" ).lightUp({
-          amountPerScreen: 2
+          amountPerScreen: 3
         });
         var slot = $( "#slot1" ).lightUp();
     </script>

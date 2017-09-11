@@ -21,25 +21,25 @@ this is currently not entirely done, if you want to mess around with it feel fre
 2. initalize a lightUp object like shown
 ```javascript
   // returns an object with methods to change slots
-  var slot = $("#some-element").lightUp({align:'top'});
+  var slot = $("#slot1").lightUp({align:'top'});
 
   //Default values for light it up
-  //{
+  {
     // currently only one type, slot
-    //type: 'slot',
+    type: 'slot',
     // colors to choose from for colorful backgrounds
-    //colors: ['blue', 'green', 'red', 'yellow'],
+    colors: ['blue', 'green', 'red', 'yellow'],
     // amount of items that will show up on a slot div at one time
-    //amountPerScreen: 1,
+    amountPerScreen: 1,
     // to make sure internal class names dont interfere with external ones,
     // you can change them
-    //deleteClassName: '_dltl8er',
-    //className: '_r34l',
+    deleteClassName: '_dltl8er',
+    className: '_r34l',
     // lightUp uses javascripts native random number generator, however, 
     // if you want to use your own put it in the format randnumber(min, max)
-    //randomNumberGenerator: randnumber,
+    randomNumberGenerator: randnumber,
     // align defailts to center but options include ['top', 'bottom', 'center']
-    //align: 'center'
+    align: 'center'
   }
 ```
 3. 

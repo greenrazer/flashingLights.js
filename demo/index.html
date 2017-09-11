@@ -40,7 +40,7 @@
       </div>
     </div>
     <div id="slot1">
-      <div>
+      <div val='0'>
         One
       </div>
       <div>
@@ -68,8 +68,16 @@
         Nine
       </div>
     </div>
-    <button onclick="console.log(slot.spin());">click</button>
-    <button onclick="console.log(slots.spin());">click</button>
+    <span id="slt1"> machine 1 a: </span>
+    <span id="slt2"> machine 1 b: </span>
+    <span id="slt3"> machine 1 c: </span>
+    <span id="slt4"> machine 2: </span>
+    <button onclick="slot.spin({done: function(val) {$('#slt4').html('machine 2:' + $('#slot1').children().children().eq(val).html())}});">click</button>
+    <button onclick="slots.spin({done: function(val) {
+        $('#slt1').html('machine 1 a:' + $('.slots').eq(0).children().children().eq(val[0]).html())
+        $('#slt2').html('machine 1 b:' + $('.slots').eq(1).children().children().eq(val[1]).html())
+        $('#slt3').html('machine 1 c:' + $('.slots').eq(2).children().children().eq(val[2]).html())
+      }});">click</button>
     <style type="text/css">
       .slots {
         display: inline-block;

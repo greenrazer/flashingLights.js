@@ -92,7 +92,7 @@
           depopulateSlot(spinInput.me);
           // callback
           if(spinInput.callback){
-            spinInput.callback();
+            spinInput.callback(spinInput.pos);
           }
         });
       }
@@ -139,9 +139,9 @@
               // callback when spin is finished
               done: undefined
             }, input);
-            return slotSpin(self, spinDefaults.to, childInfo.tiles, childInfo.extraTiles, function() {
+            slotSpin(self, spinDefaults.to, childInfo.tiles, childInfo.extraTiles, function(val) {
               if(spinDefaults.done){
-                spinDefaults.done();
+                spinDefaults.done(val);
               }
             });
           }
@@ -172,11 +172,10 @@
               if( !self.children().is(":animated") ) {
                 clearInterval(wait);
                 if(spinDefaults.done){
-                  spinDefaults.done();
+                  spinDefaults.done(outputArr);
                 }
               }
             }, 100);
-            return outputArr;
           }
         }
       }

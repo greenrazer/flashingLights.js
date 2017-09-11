@@ -50,9 +50,12 @@
         Three
       </div>
     </div>
-    <button onclick="slot.spin()">click</button>
+    <button onclick="console.log(slot.spin());">click</button>
+    <button onclick="console.log(slots.spin());">click</button>
     <script>
-        var slots = $( ".slots" ).lightUp();
+        var slots = $( ".slots" ).lightUp({
+          amountPerScreen: 2
+        });
         var slot = $( "#slot1" ).lightUp();
     </script>
   </body>

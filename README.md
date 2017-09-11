@@ -42,9 +42,10 @@ this is currently not entirely done, if you want to mess around with it feel fre
     align: 'center'
   }
 ```
-3. 
+3. spin function
 ```javascript
-  // spins to a random position between the ones in the html(one, two, three), runs the callback when finished spinning
+  // spins to a random position between the ones in the html(one, two, three), 
+  // runs the callback when finished spinning
   slot1.spin({
     done: function(value){alert("current value for this slot is: " + val);}
   });

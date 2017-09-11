@@ -23,7 +23,7 @@ this is currently not entirely done, if you want to mess around with it feel fre
   // returns an object with methods to change slots
   var slot = $("#slot1").lightUp({align:'top'});
 
-  //Default values for light it up
+  // Default values for lightUp
   {
     // currently only one type, slot
     type: 'slot',
@@ -50,4 +50,13 @@ this is currently not entirely done, if you want to mess around with it feel fre
   });
   // (e.g. might alert "current value for this slot is: 0") 
   // FYI the first user put in div is the 0th position
+
+  //Default values for spin
+  {
+    // select the tile to finish on defaults to random value
+    to:randomVal,
+    // callback when spin is finished
+    // format `function(value)`
+    done: undefined
+  }
 ```

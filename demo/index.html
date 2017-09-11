@@ -8,35 +8,35 @@
   <body>
     <div class="slots">
       <div>
-        One
+        <img src="http://steve-lovelace.com/wordpress/wp-content/uploads/2013/04/lucky-seven.png" style="width: 100%;height: 100%;"/>
       </div>
       <div>
-        Two
+        <img src="https://openclipart.org/download/252171/bomb.svg" style="width: 100%;height: 100%;"/>
       </div>
       <div>
-        Three
-      </div>
-    </div>
-    <div class="slots">
-      <div>
-        One
-      </div>
-      <div>
-        Two
-      </div>
-      <div>
-        Three
+        <img src="http://cliparts.co/cliparts/8iG/6jq/8iG6jqnbT.png" style="width: 100%;height: 100%;"/>
       </div>
     </div>
     <div class="slots">
       <div>
-        One
+        <img src="http://steve-lovelace.com/wordpress/wp-content/uploads/2013/04/lucky-seven.png" style="width: 100%;height: 100%;"/>
       </div>
       <div>
-        Two
+        <img src="https://openclipart.org/download/252171/bomb.svg" style="width: 100%;height: 100%;"/>
       </div>
       <div>
-        Three
+        <img src="http://cliparts.co/cliparts/8iG/6jq/8iG6jqnbT.png" style="width: 100%;height: 100%;"/>
+      </div>
+    </div>
+    <div class="slots">
+      <div>
+        <img src="http://steve-lovelace.com/wordpress/wp-content/uploads/2013/04/lucky-seven.png" style="width: 100%;height: 100%;"/>
+      </div>
+      <div>
+        <img src="https://openclipart.org/download/252171/bomb.svg" style="width: 100%;height: 100%;"/>
+      </div>
+      <div>
+        <img src="http://cliparts.co/cliparts/8iG/6jq/8iG6jqnbT.png" style="width: 100%;height: 100%;"/>
       </div>
     </div>
     <div id="slot1">
@@ -68,15 +68,16 @@
         Nine
       </div>
     </div>
-    <span id="slt1"> machine 1 a: </span>
-    <span id="slt2"> machine 1 b: </span>
-    <span id="slt3"> machine 1 c: </span>
+    <span id="slt1"> machine 1: </span>
     <span id="slt4"> machine 2: </span>
     <button onclick="slot.spin({done: function(val) {$('#slt4').html('machine 2:' + $('#slot1').children().children().eq(val).html())}});">click</button>
     <button onclick="slots.spin({done: function(val) {
-        $('#slt1').html('machine 1 a:' + $('.slots').eq(0).children().children().eq(val[0]).html())
-        $('#slt2').html('machine 1 b:' + $('.slots').eq(1).children().children().eq(val[1]).html())
-        $('#slt3').html('machine 1 c:' + $('.slots').eq(2).children().children().eq(val[2]).html())
+        if(val[0] === val[1] && val[0] === val[2] && val[1] === val[2]){
+          $('#slt1').html('machine 1 : WINNER')
+        }
+        else {
+          $('#slt1').html('machine 1 : LOSER')
+        }
       }});">click</button>
     <style type="text/css">
       .slots {

@@ -76,8 +76,8 @@
         else if(spaceTiles > 1){
           extraTiles = spaceTiles
         }
-        // to make things easier for us i copy all the current tiles ahead and
-        // behind i compute the maping between these two values through this algorithm
+        // to make things easier for us copy all the current tiles ahead and behind. 
+        // so that no white space can be seen when messing with alignment
         extraTiles = Math.ceil(extraTiles / settings.amountPerScreen);
         var movementBox = me.children();
         var uniqueTiles = movementBox.children();
@@ -90,12 +90,17 @@
 
       //populate the slot with the appropriate tiles
       // tiles -> amount of tiles to traverse
-      function populateSlot(me, tiles) {
+      function populateSlot(me, tiles, scroll) {
         var movementBox = me.children();
         var uniqueTiles = movementBox.children("." + settings.className);
         var uniqueTilesAmt = uniqueTiles.length;
         for(var i = 0; i < tiles / uniqueTilesAmt; i++) {
-          uniqueTiles.clone(true).appendTo(movementBox).addClass(settings.deleteClassName);
+          if(scroll === 'up'){
+            uniqueTiles.clone(true).appendTo(movementBox).addClass(settings.deleteClassName);
+          }
+          else {
+            uniqueTiles.clone(true).prependTo(movementBox).addClass(settings.deleteClassName);
+          }
         }
       }
 
@@ -108,12 +113,26 @@
           //pos,
           //addedMargin,
           //callback
-          animation: 'linear'
+          animation: 'linear',
+          //scroll: 'up'
         }, input);
         //total pixel distance nessisary to travel
-        var totalDist = spinInput.me.children().children("." + settings.className + ":first").height() * (spinInput.tiles + spinInput.pos + spinInput.extraTiles) - spinInput.addedMargin;
+        var totalDist;
+        var pxDist;
+        // if the slot is scrolling down change the margin to animate positively and place 
+        // the start at the bottom
+        if(spinInput.scroll === 'down'){
+          totalDist = spinInput.me.children().children("." + settings.className + ":first").height() * (spinInput.pos + spinInput.extraTiles) - spinInput.addedMargin;
+          pxDist = totalDist + "px";
+          //move to the bottom to move upward
+          returnTo(spinInput.me, spinInput.tiles, spinInput.extraTiles, spinInput.addedMargin);
+        }
+        else {
+          totalDist = spinInput.me.children().children("." + settings.className + ":first").height() * (spinInput.tiles + spinInput.pos + spinInput.extraTiles) - spinInput.addedMargin;
+          pxDist = "-" + totalDist + "px";
+        }
         spinInput.me.children().animate({
-          'margin-top': "-" + totalDist + "px",
+          'margin-top': pxDist,
         }, 500, spinInput.animation, function() {
           // return to set postion
           returnTo(spinInput.me, spinInput.pos, spinInput.extraTiles, spinInput.addedMargin);
@@ -138,24 +157,34 @@
       }
 
       // run a spin on a slot
-      function slotSpin(me, goTo, tiles, extraTiles, addedMargin, callback) {
-        var goTo = goTo || settings.randomNumberGenerator(0, tiles);
+      // arguments instead of $.extend because all arguments are needed
+      function slotSpin(input) {
+        var spinOptions = $.extend({
+          // me,
+          goTo: settings.randomNumberGenerator(0, this.tiles),
+          // tiles,
+          // extraTiles,
+          // addedMargin,
+          // scroll,
+          // callback
+        },input);
         // find how many complete rotations the slot should make
         var totalSpins = settings.randomNumberGenerator(3, 10);
         // how many total tiles are traversed in this situation
-        var tilesTraversed = (totalSpins * tiles);
+        var tilesTraversed = (totalSpins * spinOptions.tiles);
         // fills the area with filler tiles to make the slot seem infinite
-        populateSlot(me, tilesTraversed);
+        populateSlot(spinOptions.me, tilesTraversed, spinOptions.scroll);
         // spins the slot x amount of times
         spinX({
-          me: me,
+          me: spinOptions.me,
           tiles: tilesTraversed,
-          extraTiles: extraTiles,
-          pos: goTo,
-          addedMargin: addedMargin,
-          callback: callback
+          extraTiles: spinOptions.extraTiles,
+          pos: spinOptions.goTo,
+          addedMargin: spinOptions.addedMargin,
+          callback: spinOptions.callback,
+          scroll: spinOptions.scroll
         });
-        return goTo;
+        return spinOptions.goTo;
       }
 
       // if there are 1 or 0 slots
@@ -167,14 +196,24 @@
               // select the tile to finish on
               to: settings.randomNumberGenerator(0, childInfo.tiles),
               // callback when spin is finished
-              done: undefined
+              // done: undefined,
+              scroll: 'up'
             }, input);
 
             // make sure the slot isnt already animated
             if( !self.children().is(":animated") ) {
-              slotSpin(self, spinDefaults.to, childInfo.tiles, childInfo.extraTiles, childInfo.addedMargin, function(val) {
-                if(spinDefaults.done){
-                  spinDefaults.done(val);
+              //spin slot
+              slotSpin({
+                me: self, 
+                goTo: spinDefaults.to, 
+                tiles: childInfo.tiles, 
+                extraTiles: childInfo.extraTiles, 
+                addedMargin: childInfo.addedMargin, 
+                scroll: spinDefaults.scroll, 
+                callback: function(val) {
+                  if(spinDefaults.done){
+                    spinDefaults.done(val);
+                  }
                 }
               });
             }
@@ -194,6 +233,7 @@
               // to: undefined
               // callback when spin is finished
               // done: undefined
+              scroll: 'up'
             }, input);
             var outputArr = [];
             var i = 0;
@@ -201,7 +241,15 @@
             if( !self.children().is(":animated") ) {
               self.each(function() {
                 var goTo = spinDefaults.to || settings.randomNumberGenerator(0, childrenInfo[i].tiles);
-                outputArr.push(slotSpin($(this), goTo, childrenInfo[i].tiles, childrenInfo[i].extraTiles, childrenInfo[i].addedMargin));
+                // spin slots
+                outputArr.push(slotSpin({
+                  me: $(this), 
+                  goTo: goTo, 
+                  tiles: childrenInfo[i].tiles, 
+                  extraTiles: childrenInfo[i].extraTiles, 
+                  addedMargin: childrenInfo[i].addedMargin, 
+                  scroll: spinDefaults.scroll
+                }));
                 i++;
               });
               // wait for all the animations to finish and then call the callback

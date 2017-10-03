@@ -70,8 +70,13 @@
     </div>
     <span id="slt1"> machine 1: </span>
     <span id="slt4"> machine 2: </span>
-    <button onclick="slot.spin({done: function(val) {$('#slt4').html('machine 2:' + $('#slot1').children().children().eq(val).html())}});">click</button>
-    <button onclick="slots.spin({done: function(val) {
+    <button onclick="slot.spin({
+      done: function(val) {
+        $('#slt4').html('machine 2:' + $('#slot1').children().children().eq(val).html())
+      }
+    });">click</button>
+    <button onclick="slots.spin({
+      done: function(val) {
         if(val[0] === val[1] && val[0] === val[2] && val[1] === val[2]){
           $('#slt1').html('machine 1 : WINNER')
         }

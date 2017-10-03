@@ -169,11 +169,15 @@
               // callback when spin is finished
               done: undefined
             }, input);
-            slotSpin(self, spinDefaults.to, childInfo.tiles, childInfo.extraTiles, childInfo.addedMargin, function(val) {
-              if(spinDefaults.done){
-                spinDefaults.done(val);
-              }
-            });
+
+            // make sure the slot isnt already animated
+            if( !self.children().is(":animated") ) {
+              slotSpin(self, spinDefaults.to, childInfo.tiles, childInfo.extraTiles, childInfo.addedMargin, function(val) {
+                if(spinDefaults.done){
+                  spinDefaults.done(val);
+                }
+              });
+            }
           }
         }
       }
@@ -193,19 +197,23 @@
             }, input);
             var outputArr = [];
             var i = 0;
-            self.each(function() {
-              var goTo = spinDefaults.to || settings.randomNumberGenerator(0, childrenInfo[i].tiles);
-              outputArr.push(slotSpin($(this), goTo, childrenInfo[i].tiles, childrenInfo[i].extraTiles, childrenInfo[i].addedMargin));
-              i++;
-            });
-            var wait = setInterval(function() {
-              if( !self.children().is(":animated") ) {
-                clearInterval(wait);
-                if(spinDefaults.done){
-                  spinDefaults.done(outputArr);
+            // make sure the slot isnt already animated
+            if( !self.children().is(":animated") ) {
+              self.each(function() {
+                var goTo = spinDefaults.to || settings.randomNumberGenerator(0, childrenInfo[i].tiles);
+                outputArr.push(slotSpin($(this), goTo, childrenInfo[i].tiles, childrenInfo[i].extraTiles, childrenInfo[i].addedMargin));
+                i++;
+              });
+              // wait for all the animations to finish and then call the callback
+              var wait = setInterval(function() {
+                if( !self.children().is(":animated") ) {
+                  clearInterval(wait);
+                  if(spinDefaults.done){
+                    spinDefaults.done(outputArr);
+                  }
                 }
-              }
-            }, 100);
+              }, 100);
+            }
           }
         }
       }

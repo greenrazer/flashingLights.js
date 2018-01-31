@@ -1,6 +1,6 @@
 # flashingLights.js
 ## About
-flashingLights.js is a jQuery plugin that creates interactive gambling machines. Slot machines, roulette wheels, and more are fully customizable; graphical elements, like the symbols on a slot machine's revolving reel, can be modified in the body of your webpage. By default, outcomes are determined by JavaScript's native random number generator, but this can be altered in lightUp()'s API. 
+flashingLights.js is a jQuery plugin that creates interactive gambling machines. Slot machines, roulette wheels, and more are fully customizable; graphical elements, like the symbols on a slot machine's revolving reel, can be modified in the body of your webpage. By default, outcomes are determined by JavaScript's native random number generator, but this can be altered in lightUp()'s API. Additionally, results are generated server-side and provided to the client as needed, to prevent users from altering the outcome of a spin.
 ## Progress
 A functional demo of flashingLights.js is available, but this project is a work in progress. Feel free to pull or fork.
 ## How to Use
